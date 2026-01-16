@@ -1,48 +1,58 @@
 CLASS zcl_02_main_vehicles DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+  PUBLIC FINAL
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+    INTERFACES if_oo_adt_classrun.
 ENDCLASS.
-
 
 
 CLASS zcl_02_main_vehicles IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    " deklaration
+    " Deklarationen
+
     DATA vehicle  TYPE REF TO zcl_02_vehicle.
     DATA vehicles TYPE TABLE OF REF TO zcl_02_vehicle.
+    DATA truck    TYPE REF TO zcl_02_truck.
 
-    " instanziierungen
-    vehicle = NEW #( make  = 'Porsche'
-                     model = '911' ).
+    " Instanziierungen
+    out->write( zcl_02_vehicle=>number_of_vehicles ).
+
+    vehicle = NEW zcl_02_car( make  = 'Porsche'
+                              model = '911'
+                              seats = 2 ). " Upcast
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make  = 'MAN'
-                     model = 'TGX' ).
+    vehicle = NEW zcl_02_truck( make          = 'MAN'
+                                model         = 'TGX'
+                                cargo_in_tons = 40 ). " Upcast
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make  = 'Skoda'
-                     model = 'Suerb Combi' ).
+    vehicle = NEW zcl_02_car( make  = 'Skoda'
+                              model = 'Superb Combi'
+                              seats = 5 ). " Upcast
     APPEND vehicle TO vehicles.
 
-    "
+    out->write( zcl_02_vehicle=>number_of_vehicles ).
+
+    " Ausgabe
     LOOP AT vehicles INTO vehicle.
-    TRY.
-        vehicle->accelerate( 30 ).
-        vehicle->brake( 10 ).
-        vehicle->accelerate( 300 ).
-      CATCH zcl_02_value_too_high into data(x).
-      out->write( x->get_text( ) ).
-        "handle exception
-    ENDTRY.
-      out->write( | { vehicle->make } { vehicle->model }| ).
-
+      TRY.
+          vehicle->accelerate( 30 ).
+          vehicle->brake( 20 ).
+          vehicle->accelerate( 100 ).
+        CATCH zcl_02_value_too_high INTO DATA(x).
+          out->write( x->get_text( ) ).
+      ENDTRY.
+      IF vehicle IS INSTANCE OF zcl_02_truck.
+        truck = CAST #( vehicle ). " Downcast
+        truck->transform( ).
+        out->write( |{ COND #( WHEN truck->is_transformed = 'X'
+                               THEN 'Der LKW hat sich in einen Autobot transformiert        '
+                               ELSE 'Der Autobot hast sich wieder in einen LKW transformiert' ) }| ).
+      ENDIF.
+      out->write( vehicle->to_string( ) ). " (Dynamische) Polymorphie
     ENDLOOP.
   ENDMETHOD.
 ENDCLASS.
+

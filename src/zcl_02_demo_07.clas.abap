@@ -79,6 +79,15 @@ CLASS zcl_02_demo_07 IMPLEMENTATION.
       <connection>-airport_to_id = 'LH'.
     ENDLOOP.
 
+    " löschen
+    DELETE connections WHERE airport_from_id = 'FRA'.
+    " clear connections.
+
+    " anzahl datensätze
+    out->write( lines( connections ) ).
+
+    " ausgabe
     out->write( connections ).
+
   ENDMETHOD.
 ENDCLASS.

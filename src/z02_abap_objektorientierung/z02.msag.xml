@@ -14,6 +14,11 @@
      <MSGNR>000</MSGNR>
      <TEXT>value &amp; too high</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z02</ARBGB>
+     <MSGNR>001</MSGNR>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

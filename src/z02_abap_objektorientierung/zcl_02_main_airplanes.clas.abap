@@ -13,30 +13,42 @@ ENDCLASS.
 
 
 CLASS zcl_02_main_airplanes IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     DATA airplane  TYPE REF TO zcl_02_airplane.
     DATA airplanes TYPE TABLE OF REF TO zcl_02_airplane.
 
-    airplane = NEW #( id                   = 'D-ABUK'
-                      plane_type           = 'Airbus A380-800'
-                      empty_weight_in_tons = '277' ).
-    APPEND airplane TO airplanes.
+    " Instanziierungen
     out->write( zcl_02_airplane=>number_of_airplanes ).
-
-    airplane = NEW #( id                   = 'D-AIND'
-                      plane_type           = 'Airbus A320-200'
-                      empty_weight_in_tons = '42' ).
+    try.
+    airplane = NEW zcl_02_passenger_plane( id = 'D-BUK' plane_type = 'Airbus A380-800' empty_weight_in_tons = 227 number_of_seats = 200 ).
     APPEND airplane TO airplanes.
-    out->write( zcl_02_airplane=>number_of_airplanes ).
+    CATCH zcx_abap_initial_parameter into data(x).
+        out->write( x->get_text( ) ).
+    ENDTRY.
 
-    airplane = NEW #( id                   = 'D-AJKF'
-                      plane_type           = 'Boeing 747-400F'
-                      empty_weight_in_tons = '166' ).
+    TRY.
+    airplane = NEW zcl_02_cargo_plane( id = 'D-AIND' plane_type = 'Airbus A320-200' empty_weight_in_tons = 129 cargo_in_tons = 38 ).
     APPEND airplane TO airplanes.
-    out->write( zcl_02_airplane=>number_of_airplanes ).
+    CATCH zcx_abap_initial_parameter into data(z).
+        out->write( z->get_text( ) ).
+    ENDTRY.
 
+    TRY.
+    airplane = NEW zcl_02_passenger_plane( id = 'D-AJKF' plane_type = 'Boeing 747-400F' empty_weight_in_tons = 166 number_of_seats = 120 ).
+    APPEND airplane TO airplanes.
+      CATCH zcx_abap_initial_parameter into data(y).
+        out->write( y->get_text( ) ).
+    ENDTRY.
+
+    " Ausgabe
     LOOP AT airplanes INTO airplane.
-      out->write( |{ airplane->id } { airplane->plane_type }  { airplane->empty_weight_in_tons } | ).
+      out->write( |{ airplane->id }  { airplane->plane_type }  { airplane->empty_weight_in_tons }  { airplane->get_total_weight_in_tons(  ) }| ).
     ENDLOOP.
+
+    out->write( zcl_02_airplane=>number_of_airplanes ).
+
+
   ENDMETHOD.
 ENDCLASS.

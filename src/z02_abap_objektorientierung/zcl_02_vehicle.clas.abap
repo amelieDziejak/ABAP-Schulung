@@ -1,5 +1,5 @@
 CLASS zcl_02_vehicle DEFINITION
-  PUBLIC FINAL
+  PUBLIC
   CREATE PUBLIC.
 
   PUBLIC SECTION.
@@ -12,9 +12,13 @@ CLASS zcl_02_vehicle DEFINITION
     METHODS brake IMPORTING !value TYPE i
                   RAISING   zcl_02_value_too_high.
 
+
+    METHODS to_string RETURNING VALUE(string) TYPE string.
+
     DATA make         TYPE string READ-ONLY.
     DATA model        TYPE string READ-ONLY.
     DATA speed_in_kmh TYPE i      READ-ONLY.
+    CLASS-DATA NUMBER_of_vehicles TYPE i READ-ONLY.
 ENDCLASS.
 
 
@@ -37,5 +41,12 @@ CLASS zcl_02_vehicle IMPLEMENTATION.
   METHOD constructor.
   me->make = make.
   me->model = model.
+  number_of_vehicles += 1.
   ENDMETHOD.
+
+  METHOD to_string.
+    string = |{ make } { model } (  { speed_in_kmh }km/h)|.
+  ENDMETHOD.
+
+
 ENDCLASS.
