@@ -1,4 +1,4 @@
-class ZCL_02_CARRIER definition
+class ZCL_02_DEMO_05 definition
   public
   final
   create public .
@@ -10,5 +10,5 @@ ENDCLASS.
 
 
 
-CLASS ZCL_02_CARRIER IMPLEMENTATION.
+CLASS ZCL_02_DEMO_05 IMPLEMENTATION.
 ENDCLASS.

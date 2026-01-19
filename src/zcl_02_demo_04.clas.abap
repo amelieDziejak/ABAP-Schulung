@@ -1,14 +1,34 @@
-class ZCL_02_DEMO_04 definition
-  public
-  final
-  create public .
+CLASS zcl_02_demo_04 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
-protected section.
-private section.
+  PUBLIC SECTION.
+
+    INTERFACES if_oo_adt_classrun .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS ZCL_02_DEMO_04 IMPLEMENTATION.
+CLASS zcl_02_demo_04 IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+    "ABAP 1 Initierte Sprache index fängt bei 1 an
+    WHILE sy-index <= 10.
+      out->write( sy-index ).
+    ENDWHILE.
+
+    do 10 TIMES.
+      out->write( sy-index ).
+    enddo.
+
+    do.
+      out->write( sy-index ).
+      if sy-index = 10.
+        exit.
+      endif.
+    enddo.
+
+  ENDMETHOD.
 ENDCLASS.

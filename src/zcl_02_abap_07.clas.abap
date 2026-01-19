@@ -1,26 +1,13 @@
-CLASS zcl_02_abap_07 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_02_ABAP_07 definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_02_abap_07 IMPLEMENTATION.
-
-
-  METHOD if_oo_adt_classrun~main.
-
-  DATA customer_id TYPE /DMO/CUSTOMER_ID VALUE '0000001'.
-
-  data(travels) = zcl_02_abap_06_helper=>get_travels( customer_id = customer_id ).
-  out->write( travels ).
-
-  ENDMETHOD.
+CLASS ZCL_02_ABAP_07 IMPLEMENTATION.
 ENDCLASS.

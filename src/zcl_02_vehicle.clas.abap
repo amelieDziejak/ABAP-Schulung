@@ -19,6 +19,8 @@ CLASS zcl_02_vehicle DEFINITION
     DATA model        TYPE string READ-ONLY.
     DATA speed_in_kmh TYPE i      READ-ONLY.
     CLASS-DATA NUMBER_of_vehicles TYPE i READ-ONLY.
+    PROTECTED SECTION.
+    PRIVATE SECTION.
 ENDCLASS.
 
 
